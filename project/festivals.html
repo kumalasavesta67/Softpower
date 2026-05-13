@@ -1,0 +1,572 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Festivals & Awards — SOFTPOWER</title>
+<link rel="stylesheet" href="assets/styles.css" />
+<link rel="stylesheet" href="assets/anim.css" />
+<style>
+  .festivals-hero {
+    padding: 200px var(--pad) 100px;
+    background:
+      radial-gradient(ellipse at 20% 30%, rgba(214,164,70,0.10), transparent 55%),
+      radial-gradient(ellipse at 90% 80%, rgba(180,80,60,0.08), transparent 55%),
+      var(--bg);
+    border-bottom: 1px solid var(--line);
+  }
+  .festivals-hero h1 em { color: var(--gold); font-style: italic; font-weight: 400; }
+
+  /* Awards ledger */
+  .ledger {
+    margin-top: 60px;
+    border-top: 1px solid var(--line-strong);
+  }
+  .ledger-row {
+    display: grid;
+    grid-template-columns: 90px 1.4fr 1.6fr 1fr;
+    gap: 30px;
+    padding: 24px 0;
+    border-bottom: 1px solid var(--line);
+    align-items: center;
+  }
+  @media (max-width: 880px) {
+    .ledger-row { grid-template-columns: 70px 1fr 1fr; }
+    .ledger-row .award { display: none; }
+  }
+  .ledger-row .year {
+    font-family: var(--serif);
+    font-style: italic;
+    font-size: 32px;
+    color: var(--gold);
+  }
+  .ledger-row .festival {
+    font-family: var(--serif);
+    font-size: 22px;
+  }
+  .ledger-row .festival small {
+    display: block;
+    font-family: var(--mono);
+    font-size: 10px;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--ink-3);
+    margin-top: 4px;
+  }
+  .ledger-row .film {
+    font-family: var(--serif);
+    font-style: italic;
+    font-size: 20px;
+  }
+  .ledger-row .film small {
+    display: block;
+    font-family: var(--thai);
+    font-size: 13px;
+    color: var(--ink-3);
+    margin-top: 4px;
+    font-style: normal;
+  }
+  .ledger-row .award {
+    font-family: var(--mono);
+    font-size: 11px;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--gold);
+    text-align: right;
+  }
+  .ledger-row.headline {
+    background: linear-gradient(90deg, rgba(214,164,70,0.06), transparent);
+    margin: 0 -20px;
+    padding: 28px 20px;
+  }
+  .ledger-row.headline .award { color: var(--gold); }
+
+  /* Festivals grid */
+  .fests {
+    background: var(--bg-2);
+    border-top: 1px solid var(--line);
+    border-bottom: 1px solid var(--line);
+  }
+  .fest-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 30px;
+    margin-top: 60px;
+  }
+  @media (max-width: 880px) { .fest-grid { grid-template-columns: 1fr 1fr; } }
+  @media (max-width: 540px) { .fest-grid { grid-template-columns: 1fr; } }
+
+  .fest {
+    border: 1px solid var(--line);
+    padding: 30px;
+    background: var(--bg);
+    transition: all 0.3s;
+    display: flex;
+    flex-direction: column;
+    min-height: 320px;
+  }
+  .fest:hover { border-color: var(--gold); transform: translateY(-4px); }
+  .fest .where {
+    font-family: var(--mono);
+    font-size: 10px;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: var(--gold);
+  }
+  .fest h3 {
+    font-family: var(--serif);
+    font-size: 30px;
+    line-height: 1.1;
+    margin: 10px 0 14px;
+  }
+  .fest .th {
+    font-family: var(--thai);
+    font-size: 13px;
+    color: var(--ink-3);
+    margin-bottom: 16px;
+  }
+  .fest .body {
+    font-size: 14px;
+    color: var(--ink-2);
+    line-height: 1.6;
+    flex-grow: 1;
+  }
+  .fest .when {
+    margin-top: 22px;
+    padding-top: 16px;
+    border-top: 1px solid var(--line);
+    display: flex;
+    justify-content: space-between;
+    font-family: var(--mono);
+    font-size: 10px;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--ink-3);
+  }
+  .fest .when strong { color: var(--gold); }
+
+  /* Calendar */
+  .calendar-section { background: var(--bg); }
+  .cal {
+    margin-top: 60px;
+    border-top: 1px solid var(--line-strong);
+  }
+  .cal-row {
+    display: grid;
+    grid-template-columns: 120px 200px 1fr 140px;
+    gap: 30px;
+    padding: 22px 0;
+    border-bottom: 1px solid var(--line);
+    align-items: center;
+  }
+  @media (max-width: 880px) {
+    .cal-row { grid-template-columns: 80px 1fr; }
+    .cal-row .city, .cal-row .badge-stat { display: none; }
+  }
+  .cal-row .month {
+    font-family: var(--serif);
+    font-style: italic;
+    font-size: 22px;
+    color: var(--gold);
+  }
+  .cal-row .month small {
+    display: block;
+    font-family: var(--mono);
+    font-style: normal;
+    font-size: 10px;
+    letter-spacing: 0.18em;
+    color: var(--ink-3);
+    margin-top: 4px;
+  }
+  .cal-row .event { font-family: var(--serif); font-size: 22px; }
+  .cal-row .event small {
+    display: block;
+    font-family: var(--thai);
+    font-size: 13px;
+    color: var(--ink-3);
+    margin-top: 2px;
+  }
+  .cal-row .city {
+    font-family: var(--mono);
+    font-size: 11px;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--ink-2);
+  }
+  .cal-row .badge-stat {
+    font-family: var(--mono);
+    font-size: 10px;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--gold);
+    border: 1px solid var(--gold);
+    padding: 6px 10px;
+    border-radius: 999px;
+    text-align: center;
+  }
+
+  /* Big closing */
+  .closing {
+    text-align: center;
+    background:
+      radial-gradient(ellipse at center, rgba(214,164,70,0.12), transparent 60%),
+      var(--bg-2);
+  }
+  .closing h2 { font-size: clamp(48px, 7vw, 110px); max-width: 12ch; margin: 30px auto; }
+  .closing h2 em { color: var(--gold); font-style: italic; font-weight: 400; }
+</style>
+<script src="https://mcp.figma.com/mcp/html-to-design/capture.js"></script>
+</head>
+<body>
+<div class="grain"></div>
+
+<nav class="nav">
+  <a href="index.html" class="brand">
+    <div class="mark"></div>
+    <div>SOFTPOWER<small>Thai Cinema Authority</small></div>
+  </a>
+  <ul class="nav-links">
+    <li><a href="index.html">Home</a></li>
+    <li><a href="films.html">Films</a></li>
+    <li><a href="series.html">Series</a></li>
+    <li><a href="festivals.html" class="active">Festivals</a></li>
+    <li><a href="contact.html">Contact</a></li>
+  </ul>
+</nav>
+
+<!-- ============== HERO ============== -->
+<header class="festivals-hero" data-screen-label="01 Festivals Hero">
+  <div class="wrap">
+    <div class="pageHead" style="padding:0;border:none;">
+      <div>
+        <div class="eyebrow">Chapter IV · The Circuit</div>
+        <h1 style="margin-top:20px;">Festivals<br/>& <em>awards.</em></h1>
+      </div>
+      <div>
+        <p class="lead">Where Thai cinema has actually been shown, judged, and decorated. Below — the international circuit in chronological order, the major laurels won between 2010 and 2026, and the calendar of festivals you can attend in Thailand itself.</p>
+      </div>
+    </div>
+  </div>
+</header>
+
+<!-- ============== LEDGER ============== -->
+<section data-screen-label="02 Awards Ledger">
+  <div class="wrap">
+    <div class="section-head">
+      <div>
+        <div class="eyebrow">The Ledger</div>
+        <h2 style="margin-top:20px;">Sixteen years of<br/><em>international</em> laurels.</h2>
+      </div>
+      <div class="right">
+        <p>An abbreviated record of Thai cinema's major appearances on the festival circuit. Cannes, Venice, Berlin, Toronto, Busan, Locarno.</p>
+      </div>
+    </div>
+
+    <div class="ledger">
+      <div class="ledger-row headline">
+        <div class="year">2010</div>
+        <div class="festival">Cannes Film Festival<small>67th edition · France</small></div>
+        <div class="film">Uncle Boonmee Who Can Recall His Past Lives<small>ลุงบุญมีระลึกชาติ · Apichatpong W.</small></div>
+        <div class="award">Palme d'Or ★</div>
+      </div>
+
+      <div class="ledger-row">
+        <div class="year">2012</div>
+        <div class="festival">Locarno Film Festival<small>Switzerland</small></div>
+        <div class="film">Mary Is Happy, Mary Is Happy<small>Nawapol Thamrongrattanarit</small></div>
+        <div class="award">Filmmaker of the Present</div>
+      </div>
+
+      <div class="ledger-row">
+        <div class="year">2015</div>
+        <div class="festival">Cannes · Un Certain Regard<small>France</small></div>
+        <div class="film">Cemetery of Splendour<small>รักที่ขอนแก่น · Apichatpong W.</small></div>
+        <div class="award">Official Selection</div>
+      </div>
+
+      <div class="ledger-row">
+        <div class="year">2016</div>
+        <div class="festival">Locarno Film Festival<small>Switzerland</small></div>
+        <div class="film">By the Time It Gets Dark<small>ดาวคะนอง · Anocha Suwichakornpong</small></div>
+        <div class="award">Concorso Cineasti del Presente</div>
+      </div>
+
+      <div class="ledger-row headline">
+        <div class="year">2018</div>
+        <div class="festival">Venice Film Festival<small>75th Mostra · Italy</small></div>
+        <div class="film">Manta Ray<small>กระเบนราหู · Phuttiphong Aroonpheng</small></div>
+        <div class="award">Orizzonti — Best Film ★</div>
+      </div>
+
+      <div class="ledger-row">
+        <div class="year">2019</div>
+        <div class="festival">Berlinale<small>Germany</small></div>
+        <div class="film">Krabi, 2562<small>Anocha S. & Ben Rivers</small></div>
+        <div class="award">Forum Selection</div>
+      </div>
+
+      <div class="ledger-row">
+        <div class="year">2021</div>
+        <div class="festival">Bucheon International Fantastic FF<small>South Korea</small></div>
+        <div class="film">The Medium<small>ร่างทรง · Banjong Pisanthanakun</small></div>
+        <div class="award">Best of Bucheon</div>
+      </div>
+
+      <div class="ledger-row headline">
+        <div class="year">2021</div>
+        <div class="festival">Cannes Film Festival<small>74th edition · France</small></div>
+        <div class="film">Memoria<small>เมโมเรีย · Apichatpong W.</small></div>
+        <div class="award">Jury Prize ★</div>
+      </div>
+
+      <div class="ledger-row">
+        <div class="year">2022</div>
+        <div class="festival">Berlinale · Encounters<small>Germany</small></div>
+        <div class="film">Arnold Is a Model Student<small>นักเรียนตัวอย่าง · Sorayos Prapapan</small></div>
+        <div class="award">Official Selection</div>
+      </div>
+
+      <div class="ledger-row">
+        <div class="year">2023</div>
+        <div class="festival">TIFF · Toronto<small>Canada</small></div>
+        <div class="film">Solids by the Seashore<small>ทะเลของฉัน มีคลื่นเล็กน้อย · Patiparn Boontarig</small></div>
+        <div class="award">Centrepiece Selection</div>
+      </div>
+
+      <div class="ledger-row headline">
+        <div class="year">2024</div>
+        <div class="festival">Busan International FF<small>South Korea</small></div>
+        <div class="film">How to Make Millions Before Grandma Dies<small>หลานม่า · Pat Boonnitipat</small></div>
+        <div class="award">Audience Award ★</div>
+      </div>
+
+      <div class="ledger-row">
+        <div class="year">2024</div>
+        <div class="festival">Locarno Film Festival<small>Switzerland</small></div>
+        <div class="film">The Paradise of Thorns<small>วิมานหนาม · Naruebet Kuno</small></div>
+        <div class="award">International Competition</div>
+      </div>
+
+      <div class="ledger-row">
+        <div class="year">2025</div>
+        <div class="festival">Cannes · Directors' Fortnight<small>France</small></div>
+        <div class="film">Mother Land<small>แม่ดิน · debut feature</small></div>
+        <div class="award">Quinzaine Selection</div>
+      </div>
+
+      <div class="ledger-row">
+        <div class="year">2026</div>
+        <div class="festival">Berlinale · Competition<small>Germany</small></div>
+        <div class="film">A House in the Rain<small>บ้านในสายฝน</small></div>
+        <div class="award">In Competition</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============== THAI FESTIVALS ============== -->
+<section class="fests" data-screen-label="03 Thai Festivals">
+  <div class="wrap">
+    <div class="section-head">
+      <div>
+        <div class="eyebrow">Visit · The Calendar</div>
+        <h2 style="margin-top:20px;">Six festivals<br/>worth <em>flying for.</em></h2>
+      </div>
+      <div class="right">
+        <p>Bangkok and Chiang Mai now host a year-round film calendar. Six events have established themselves as essential — combining premieres, retrospectives, and industry markets.</p>
+      </div>
+    </div>
+
+    <div class="fest-grid">
+      <div class="fest">
+        <div class="where">Bangkok · International</div>
+        <h3>Bangkok International<br/>Film Festival</h3>
+        <div class="th">เทศกาลภาพยนตร์นานาชาติกรุงเทพ</div>
+        <p class="body">Re-launched in 2024 after a fifteen-year hiatus. Eight programme strands and a regional industry market. The country's flagship.</p>
+        <div class="when"><span>September</span><strong>BKK · CentralWorld</strong></div>
+      </div>
+
+      <div class="fest">
+        <div class="where">Bangkok · World Cinema</div>
+        <h3>World Film<br/>Festival of Bangkok</h3>
+        <div class="th">เทศกาลภาพยนตร์โลกแห่งกรุงเทพฯ</div>
+        <p class="body">The country's longest-running curator-led festival. Discovery-focused — first stop in Asia for many European art-house premieres.</p>
+        <div class="when"><span>November</span><strong>BKK · House Samyan</strong></div>
+      </div>
+
+      <div class="fest">
+        <div class="where">Chiang Mai · Documentary</div>
+        <h3>CAAT<br/>Documentary Festival</h3>
+        <div class="th">เทศกาลหนังสารคดีเชียงใหม่</div>
+        <p class="body">Boutique documentary festival in northern Thailand. Programmed by filmmakers, for filmmakers. SEA non-fiction's regional anchor.</p>
+        <div class="when"><span>February</span><strong>Chiang Mai · Old Town</strong></div>
+      </div>
+
+      <div class="fest">
+        <div class="where">Bangkok · Short Form</div>
+        <h3>Short Film &<br/>Video Festival</h3>
+        <div class="th">เทศกาลภาพยนตร์สั้น</div>
+        <p class="body">Run by the Thai Film Archive since 1997. Annual showcase of the country's shorts, music videos, and student work. Pipeline for new directors.</p>
+        <div class="when"><span>August</span><strong>Salaya · Film Archive</strong></div>
+      </div>
+
+      <div class="fest">
+        <div class="where">Bangkok · Genre</div>
+        <h3>Bangkok Asian<br/>Film Festival</h3>
+        <div class="th">เทศกาลภาพยนตร์เอเชียกรุงเทพฯ</div>
+        <p class="body">Pan-Asian genre specialist. Horror, action, romance. The festival where Thai mainstream production talks to Korean, Indonesian, and Vietnamese counterparts.</p>
+        <div class="when"><span>July</span><strong>BKK · Major Cineplex</strong></div>
+      </div>
+
+      <div class="fest">
+        <div class="where">Phuket · Open-Air</div>
+        <h3>Andaman Film<br/>Days</h3>
+        <div class="th">เทศกาลภาพยนตร์อันดามัน</div>
+        <p class="body">Beach-side open-air programme. Three nights, three films, sea breeze, sticky rice. The most photographable cinema event in the country.</p>
+        <div class="when"><span>March</span><strong>Phuket · Karon Beach</strong></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============== CALENDAR ============== -->
+<section class="calendar-section" data-screen-label="04 Year Calendar">
+  <div class="wrap">
+    <div class="section-head">
+      <div>
+        <div class="eyebrow">2026 · At a Glance</div>
+        <h2 style="margin-top:20px;">The <em>year</em><br/>in Thai cinema.</h2>
+      </div>
+      <div class="right">
+        <p>A condensed twelve-month view of the festival circuit relevant to Thai content — both domestic events and international windows where Thai films are in competition.</p>
+      </div>
+    </div>
+
+    <div class="cal">
+      <div class="cal-row">
+        <div class="month">February<small>02 · 2026</small></div>
+        <div class="event">Berlinale · Competition<small>เบอร์ลิน · เทศกาลหนังเยอรมัน</small></div>
+        <div class="city">Berlin · Germany</div>
+        <div class="badge-stat">Intl ★</div>
+      </div>
+      <div class="cal-row">
+        <div class="month">February<small>02 · 2026</small></div>
+        <div class="event">CAAT Documentary Festival<small>เทศกาลสารคดี เชียงใหม่</small></div>
+        <div class="city">Chiang Mai · TH</div>
+        <div class="badge-stat">Local</div>
+      </div>
+      <div class="cal-row">
+        <div class="month">March<small>03 · 2026</small></div>
+        <div class="event">Andaman Film Days<small>เทศกาลภาพยนตร์อันดามัน</small></div>
+        <div class="city">Phuket · TH</div>
+        <div class="badge-stat">Local</div>
+      </div>
+      <div class="cal-row">
+        <div class="month">May<small>05 · 2026</small></div>
+        <div class="event">Cannes Film Festival<small>เทศกาลหนังเมืองคานส์</small></div>
+        <div class="city">Cannes · France</div>
+        <div class="badge-stat">Intl ★</div>
+      </div>
+      <div class="cal-row">
+        <div class="month">July<small>07 · 2026</small></div>
+        <div class="event">Bangkok Asian Film Festival<small>เทศกาลภาพยนตร์เอเชีย</small></div>
+        <div class="city">Bangkok · TH</div>
+        <div class="badge-stat">Local</div>
+      </div>
+      <div class="cal-row">
+        <div class="month">August<small>08 · 2026</small></div>
+        <div class="event">Locarno International<small>โลคาร์โน</small></div>
+        <div class="city">Locarno · Switzerland</div>
+        <div class="badge-stat">Intl</div>
+      </div>
+      <div class="cal-row">
+        <div class="month">August<small>08 · 2026</small></div>
+        <div class="event">Short Film & Video Festival<small>เทศกาลภาพยนตร์สั้น</small></div>
+        <div class="city">Salaya · TH</div>
+        <div class="badge-stat">Local</div>
+      </div>
+      <div class="cal-row">
+        <div class="month">September<small>09 · 2026</small></div>
+        <div class="event">Venice Mostra<small>เทศกาลหนังเวนิส</small></div>
+        <div class="city">Venice · Italy</div>
+        <div class="badge-stat">Intl ★</div>
+      </div>
+      <div class="cal-row">
+        <div class="month">September<small>09 · 2026</small></div>
+        <div class="event">Bangkok International FF<small>เทศกาลฯ กรุงเทพ</small></div>
+        <div class="city">Bangkok · TH</div>
+        <div class="badge-stat">Local ★</div>
+      </div>
+      <div class="cal-row">
+        <div class="month">October<small>10 · 2026</small></div>
+        <div class="event">Busan International FF<small>ปูซาน เกาหลีใต้</small></div>
+        <div class="city">Busan · South Korea</div>
+        <div class="badge-stat">Intl ★</div>
+      </div>
+      <div class="cal-row">
+        <div class="month">November<small>11 · 2026</small></div>
+        <div class="event">World Film Festival of BKK<small>เทศกาลภาพยนตร์โลก</small></div>
+        <div class="city">Bangkok · TH</div>
+        <div class="badge-stat">Local</div>
+      </div>
+      <div class="cal-row">
+        <div class="month">December<small>12 · 2026</small></div>
+        <div class="event">Subhanahongsa Awards<small>รางวัลสุพรรณหงส์</small></div>
+        <div class="city">Bangkok · TH</div>
+        <div class="badge-stat">Industry</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============== CLOSING ============== -->
+<section class="closing" data-screen-label="05 Closing">
+  <div class="wrap">
+    <div class="eyebrow" style="justify-content:center; display:inline-flex;">End of Volume IV</div>
+    <h2 style="margin: 24px auto;">Thai cinema is no longer<br/>a <em>discovery.</em></h2>
+    <p class="lead" style="max-width: 580px; margin: 0 auto 40px;">It's a destination. Watch a film, read the essay, mark a festival on your calendar — and consider this volume merely an opening shot.</p>
+    <div style="display:inline-flex; gap:14px; flex-wrap:wrap; justify-content:center;">
+      <a href="index.html" class="btn btn--primary">Back to the Index <span class="arr">→</span></a>
+      <a href="films.html" class="btn">Films catalogue <span class="arr">→</span></a>
+      <a href="series.html" class="btn">Series catalogue <span class="arr">→</span></a>
+    </div>
+  </div>
+</section>
+
+<!-- ============== FOOTER ============== -->
+<footer class="footer">
+  <div class="footer-grid">
+    <div>
+      <a href="index.html" class="brand">
+        <div class="mark"></div>
+        <div>SOFTPOWER<small>Thai Cinema Authority</small></div>
+      </a>
+      <p style="color: var(--ink-2); font-size: 14px; max-width: 380px; margin-top: 20px;">An editorial field guide to the films and series shaping Thailand's place in the global imagination.</p>
+    </div>
+    <div>
+      <h4>Sections</h4>
+      <ul>
+        <li><a href="index.html">Home</a></li>
+        <li><a href="films.html">Films</a></li>
+        <li><a href="series.html">Series</a></li>
+        <li><a href="festivals.html">Festivals</a></li>
+        <li><a href="contact.html">Contact</a></li>
+      </ul>
+    </div>
+    <div>
+      <h4>This Page</h4>
+      <ul>
+        <li><a href="#">The Ledger</a></li>
+        <li><a href="#">Thai Festivals</a></li>
+        <li><a href="#">2026 Calendar</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <div>© 2026 Softpower Editorial · Bangkok</div>
+  </div>
+</footer>
+
+<script src="assets/anim.js"></script>
+</body>
+</html>

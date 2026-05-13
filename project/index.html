@@ -1,0 +1,804 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>SOFTPOWER — Thai Cinema & Series</title>
+<link rel="stylesheet" href="assets/styles.css" />
+<link rel="stylesheet" href="assets/anim.css" />
+<style>
+  /* ---------- Hero ---------- */
+  .hero {
+    position: relative;
+    min-height: 100vh;
+    padding: 160px var(--pad) 80px;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    background:
+      radial-gradient(ellipse at 75% 30%, rgba(214,164,70,0.15), transparent 55%),
+      radial-gradient(ellipse at 15% 90%, rgba(180,80,60,0.1), transparent 50%),
+      var(--bg);
+  }
+  .hero-top {
+    display: grid;
+    grid-template-columns: 1fr auto;
+    align-items: start;
+    gap: 40px;
+    max-width: var(--maxw);
+    margin: 0 auto;
+    width: 100%;
+  }
+  .hero-coord {
+    font-family: var(--mono);
+    font-size: 11px;
+    letter-spacing: 0.18em;
+    color: var(--ink-3);
+    text-align: right;
+    line-height: 1.8;
+  }
+  .hero-coord span { color: var(--gold); }
+
+  .hero-title {
+    max-width: var(--maxw);
+    margin: 60px auto 0;
+    width: 100%;
+  }
+  .hero-title h1 {
+    font-size: clamp(64px, 12.5vw, 220px);
+    line-height: 0.88;
+    letter-spacing: -0.025em;
+    font-weight: 500;
+  }
+  .hero-title h1 .row { display: block; }
+  .hero-title h1 em { font-style: italic; color: var(--gold); font-weight: 400; }
+  .hero-title h1 .thai-line {
+    font-family: var(--thai);
+    font-size: 0.22em;
+    font-style: normal;
+    font-weight: 300;
+    color: var(--ink-2);
+    letter-spacing: 0;
+    margin-top: 24px;
+    display: block;
+    line-height: 1.4;
+    max-width: 600px;
+  }
+
+  .hero-bottom {
+    max-width: var(--maxw);
+    margin: 80px auto 0;
+    width: 100%;
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 40px;
+    align-items: end;
+  }
+  @media (max-width: 880px) {
+    .hero-bottom { grid-template-columns: 1fr; }
+  }
+  .hero-blurb { max-width: 380px; }
+  .hero-blurb p { font-size: 15px; color: var(--ink-2); margin-bottom: 24px; }
+
+  .hero-stat { text-align: center; border-left: 1px solid var(--line); padding-left: 24px; }
+  .hero-stat:first-of-type { border-left: none; padding-left: 0; }
+  .hero-stat .num {
+    font-family: var(--serif);
+    font-size: clamp(48px, 6vw, 88px);
+    font-weight: 500;
+    line-height: 1;
+    color: var(--gold);
+    font-style: italic;
+  }
+  .hero-stat .lbl {
+    font-family: var(--mono);
+    font-size: 10px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--ink-3);
+    margin-top: 12px;
+  }
+
+  .hero-feature {
+    text-align: right;
+  }
+  .hero-feature .poster {
+    aspect-ratio: 3/4;
+    max-width: 280px;
+    margin-left: auto;
+    margin-bottom: 16px;
+  }
+  .hero-feature .name { font-family: var(--serif); font-size: 22px; font-style: italic; }
+  .hero-feature .desc { font-family: var(--mono); font-size: 10px; letter-spacing: 0.18em; text-transform: uppercase; color: var(--ink-3); margin-top: 4px; }
+
+  /* ---------- Marquee ---------- */
+  .marquee {
+    border-top: 1px solid var(--line);
+    border-bottom: 1px solid var(--line);
+    padding: 26px 0;
+    overflow: hidden;
+    background: var(--bg-2);
+    white-space: nowrap;
+  }
+  .marquee-track {
+    display: inline-flex;
+    gap: 60px;
+    animation: marquee 60s linear infinite;
+    font-family: var(--serif);
+    font-size: clamp(28px, 3vw, 44px);
+    font-style: italic;
+  }
+  .marquee-track span { color: var(--ink-2); }
+  .marquee-track em { color: var(--gold); font-style: normal; padding: 0 6px; }
+  @keyframes marquee {
+    from { transform: translateX(0); }
+    to { transform: translateX(-50%); }
+  }
+
+  /* ---------- Story block ---------- */
+  .story-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 80px;
+    align-items: start;
+  }
+  @media (max-width: 880px) {
+    .story-grid { grid-template-columns: 1fr; gap: 40px; }
+  }
+  .story-grid h2 em { color: var(--gold); font-style: italic; font-weight: 400; }
+  .story-text p { color: var(--ink-2); margin-bottom: 20px; font-size: 17px; line-height: 1.7; }
+  .story-tags {
+    display: flex; flex-wrap: wrap; gap: 8px; margin-top: 32px;
+  }
+
+  /* ---------- Featured films section ---------- */
+  .section-head {
+    display: flex;
+    justify-content: space-between;
+    align-items: end;
+    margin-bottom: 60px;
+    gap: 40px;
+    flex-wrap: wrap;
+  }
+  .section-head h2 em { color: var(--gold); font-style: italic; font-weight: 400; }
+  .section-head .right { max-width: 320px; }
+  .section-head .right p { font-size: 14px; color: var(--ink-2); margin-bottom: 16px; }
+
+  .film-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 24px;
+  }
+  @media (max-width: 980px) { .film-grid { grid-template-columns: repeat(3, 1fr); } }
+  @media (max-width: 720px) { .film-grid { grid-template-columns: repeat(2, 1fr); } }
+
+  /* ---------- Editorial split (series) ---------- */
+  .series-editorial {
+    background: var(--bg-2);
+    border-top: 1px solid var(--line);
+    border-bottom: 1px solid var(--line);
+  }
+  .series-grid {
+    display: grid;
+    grid-template-columns: 1fr 1.6fr;
+    gap: 60px;
+  }
+  @media (max-width: 880px) {
+    .series-grid { grid-template-columns: 1fr; }
+  }
+  .series-headline h2 { font-size: clamp(40px, 6vw, 88px); }
+  .series-headline h2 em { color: var(--jade); font-style: italic; font-weight: 400; }
+  .series-headline .lead { margin-top: 30px; margin-bottom: 30px; }
+
+  .series-list { display: flex; flex-direction: column; }
+  .series-row {
+    display: grid;
+    grid-template-columns: 80px 1fr auto;
+    gap: 24px;
+    align-items: center;
+    padding: 22px 0;
+    border-bottom: 1px solid var(--line);
+    transition: background 0.2s;
+    cursor: pointer;
+  }
+  .series-row:first-child { border-top: 1px solid var(--line); }
+  .series-row:hover { background: rgba(214,164,70,0.04); padding-left: 8px; }
+  .series-row .num {
+    font-family: var(--mono);
+    font-size: 11px;
+    letter-spacing: 0.18em;
+    color: var(--ink-3);
+  }
+  .series-row .title { font-family: var(--serif); font-size: 26px; line-height: 1.1; }
+  .series-row .title em { color: var(--gold); font-style: italic; }
+  .series-row .title small {
+    display: block;
+    font-family: var(--thai);
+    font-size: 13px;
+    color: var(--ink-3);
+    margin-top: 4px;
+  }
+  .series-row .info {
+    font-family: var(--mono);
+    font-size: 10px;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--ink-3);
+    text-align: right;
+  }
+  .series-row .info span { display: block; }
+  .series-row .info .yr { color: var(--gold); }
+  @media (max-width: 600px) {
+    .series-row { grid-template-columns: 50px 1fr; }
+    .series-row .info { display: none; }
+  }
+
+  /* ---------- Spotlight ---------- */
+  .spotlight {
+    background:
+      radial-gradient(ellipse at center, rgba(214,164,70,0.08), transparent 70%),
+      var(--bg);
+  }
+  .spotlight-grid {
+    display: grid;
+    grid-template-columns: 1fr 1.1fr;
+    gap: 60px;
+    align-items: center;
+  }
+  @media (max-width: 880px) {
+    .spotlight-grid { grid-template-columns: 1fr; }
+  }
+  .spotlight .poster { aspect-ratio: 2/3; max-width: 460px; }
+  .spotlight h2 em { color: var(--gold); font-style: italic; font-weight: 400; }
+  .spotlight .meta-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    border-top: 1px solid var(--line);
+    border-bottom: 1px solid var(--line);
+    margin: 32px 0;
+  }
+  .spotlight .meta-cell {
+    padding: 18px 0;
+    border-right: 1px solid var(--line);
+  }
+  .spotlight .meta-cell:last-child { border-right: none; padding-left: 18px; }
+  .spotlight .meta-cell:nth-child(2) { padding-left: 18px; }
+  .spotlight .meta-cell .lbl { font-family: var(--mono); font-size: 10px; letter-spacing: 0.2em; text-transform: uppercase; color: var(--ink-3); margin-bottom: 6px; }
+  .spotlight .meta-cell .val { font-family: var(--serif); font-size: 22px; font-style: italic; color: var(--gold); }
+
+  /* ---------- Impact stats ---------- */
+  .impact {
+    background: var(--bg-2);
+    border-top: 1px solid var(--line);
+  }
+  .impact-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 0;
+    border-top: 1px solid var(--line);
+    margin-top: 60px;
+  }
+  @media (max-width: 880px) { .impact-grid { grid-template-columns: repeat(2, 1fr); } }
+  .impact-cell {
+    padding: 50px 30px 50px 0;
+    border-right: 1px solid var(--line);
+  }
+  .impact-cell:last-child { border-right: none; }
+  .impact-cell:nth-child(2), .impact-cell:nth-child(3), .impact-cell:nth-child(4) {
+    padding-left: 30px;
+  }
+  @media (max-width: 880px) {
+    .impact-cell:nth-child(2n) { border-right: none; }
+  }
+  .impact-cell .big {
+    font-family: var(--serif);
+    font-size: clamp(56px, 7vw, 96px);
+    line-height: 1;
+    font-style: italic;
+    font-weight: 400;
+    color: var(--gold);
+  }
+  .impact-cell .big .unit { font-size: 0.4em; vertical-align: super; color: var(--ink-2); font-style: normal; margin-left: 4px; }
+  .impact-cell .cap { font-family: var(--mono); font-size: 11px; letter-spacing: 0.18em; text-transform: uppercase; color: var(--ink-3); margin-top: 16px; }
+  .impact-cell .desc { color: var(--ink-2); font-size: 14px; margin-top: 12px; }
+
+  /* ---------- Quote ---------- */
+  .quote {
+    text-align: center;
+    max-width: 900px;
+    margin: 0 auto;
+  }
+  .quote-mark { font-family: var(--serif); font-size: 160px; line-height: 0.4; color: var(--gold); }
+  .quote q {
+    font-family: var(--serif);
+    font-style: italic;
+    font-size: clamp(28px, 3.4vw, 48px);
+    line-height: 1.3;
+    color: var(--ink);
+    display: block;
+    margin: 30px 0 30px;
+    quotes: none;
+  }
+  .quote q::before, .quote q::after { content: ''; }
+  .quote-attr { font-family: var(--mono); font-size: 11px; letter-spacing: 0.2em; text-transform: uppercase; color: var(--ink-3); }
+  .quote-attr span { color: var(--gold); }
+
+  /* ---------- CTA ---------- */
+  .cta {
+    text-align: center;
+    background:
+      radial-gradient(ellipse at center top, rgba(214,164,70,0.15), transparent 60%),
+      var(--bg);
+    border-top: 1px solid var(--line);
+  }
+  .cta h2 em { color: var(--gold); font-style: italic; font-weight: 400; }
+  .cta .lead { max-width: 580px; margin: 30px auto 40px; }
+  .cta-buttons { display: inline-flex; gap: 16px; flex-wrap: wrap; justify-content: center; }
+</style>
+<script src="https://mcp.figma.com/mcp/html-to-design/capture.js"></script>
+</head>
+<body>
+<div class="grain"></div>
+
+<nav class="nav">
+  <a href="index.html" class="brand">
+    <div class="mark"></div>
+    <div>SOFTPOWER<small>Thai Cinema Authority</small></div>
+  </a>
+  <ul class="nav-links">
+    <li><a href="index.html" class="active">Home</a></li>
+    <li><a href="films.html">Films</a></li>
+    <li><a href="series.html">Series</a></li>
+    <li><a href="festivals.html">Festivals</a></li>
+    <li><a href="contact.html">Contact</a></li>
+  </ul>
+</nav>
+
+<!-- ============== HERO ============== -->
+<header class="hero" data-screen-label="01 Hero">
+  <div class="hero-top">
+    <div>
+    </div>
+    <div class="hero-coord">
+      <div><span>13.7563° N</span> · 100.5018° E</div>
+      <div>Bangkok / Krung Thep</div>
+    </div>
+  </div>
+
+  <div class="hero-title">
+    <h1>
+      <span class="row">Thailand,</span>
+      <span class="row">in <em>frames.</em></span>
+      <span class="thai-line">เรื่องราว รสนิยม และวัฒนธรรมไทย ที่ถูกฉายผ่านจอเงินและซีรีส์ ไปสู่ผู้ชมทั่วโลก</span>
+    </h1>
+  </div>
+
+  <div class="hero-bottom">
+    <div class="hero-blurb">
+      <p>A field guide to the Thai films and series shaping global appetite — for our food, our ghosts, our love stories, and the particular slant of light at 6 pm in Bangkok.</p>
+      <a href="#story" class="btn btn--primary">Begin reading <span class="arr">→</span></a>
+    </div>
+  </div>
+</header>
+
+<!-- ============== MARQUEE ============== -->
+<div class="marquee">
+  <div class="marquee-track">
+    <span>ฉลาดเกมส์โกง <em>·</em></span>
+    <span>The Medium <em>·</em></span>
+    <span>Pee Mak <em>·</em></span>
+    <span>Memoria <em>·</em></span>
+    <span>Uncle Boonmee <em>·</em></span>
+    <span>Hunger <em>·</em></span>
+    <span>Hormones <em>·</em></span>
+    <span>Bad Genius <em>·</em></span>
+    <span>Manta Ray <em>·</em></span>
+    <span>Doctor Climax <em>·</em></span>
+    <span>Girl from Nowhere <em>·</em></span>
+    <span>One for the Road <em>·</em></span>
+    <!-- duplicate for seamless loop -->
+    <span>ฉลาดเกมส์โกง <em>·</em></span>
+    <span>The Medium <em>·</em></span>
+    <span>Pee Mak <em>·</em></span>
+    <span>Memoria <em>·</em></span>
+    <span>Uncle Boonmee <em>·</em></span>
+    <span>Hunger <em>·</em></span>
+    <span>Hormones <em>·</em></span>
+    <span>Bad Genius <em>·</em></span>
+    <span>Manta Ray <em>·</em></span>
+    <span>Doctor Climax <em>·</em></span>
+    <span>Girl from Nowhere <em>·</em></span>
+    <span>One for the Road <em>·</em></span>
+  </div>
+</div>
+
+<!-- ============== STORY ============== -->
+<section id="story" data-screen-label="02 Story">
+  <div class="wrap">
+    <div class="story-grid">
+      <div>
+        <div class="eyebrow">The Premise</div>
+        <h2 class="thai" style="margin-top:20px;">หนังและซีรีส์ไทย<br/>คือ <em>การทูตชนิดหนึ่ง</em>.</h2>
+      </div>
+      <div class="story-text">
+        <p>ในขณะที่ตลาดอาหารไทย มวยไทย และมรดกวัฒนธรรมต่างเดินทางออกนอกประเทศมานานหลายทศวรรษ — สิ่งที่เพิ่งเริ่มกลายเป็นกระแสที่ทรงพลังที่สุด คือเรื่องเล่าจากจอภาพยนตร์และซีรีส์ไทย</p>
+        <p>เรื่องผีที่เป็นทั้งอารมณ์ขันและสยอง โรงเรียนมัธยมที่กลายเป็น heist thriller ตำนานรักโบราณที่กลายเป็นบล็อกบัสเตอร์ และซีรีส์วัยรุ่นที่เปลี่ยนวิธีที่โลกเข้าใจเอเชียตะวันออกเฉียงใต้ — ทั้งหมดนี้คือ “Soft Power” ในความหมายที่บริสุทธิ์ที่สุด</p>
+        <div class="story-tags">
+          <span class="tag">Drama</span>
+          <span class="tag">Horror</span>
+          <span class="tag">Romance</span>
+          <span class="tag">Coming-of-Age</span>
+          <span class="tag">Thriller</span>
+          <span class="tag">Arthouse</span>
+          <span class="tag">BL · Y-Series</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<hr class="rule" />
+
+<!-- ============== FEATURED FILMS ============== -->
+<section data-screen-label="03 Featured Films">
+  <div class="wrap">
+    <div class="section-head">
+      <div>
+        <div class="eyebrow">Chapter I · The Cinema</div>
+        <h2 style="margin-top:20px;">Eight films that<br/>made the world <em>look.</em></h2>
+      </div>
+      <div class="right">
+        <p>From Cannes' Palme d'Or to record-shattering box-office runs across East Asia. A curated entry-point into the New Thai New Wave.</p>
+        <a href="films.html" class="btn">Browse all films <span class="arr">→</span></a>
+      </div>
+    </div>
+
+    <div class="film-grid">
+      <a class="card" href="films.html">
+        <div class="poster tint-gold">
+          <span class="badge">Cannes ·  Palme d'Or</span>
+          <img src="images/%E0%B8%A5%E0%B8%B8%E0%B8%87%E0%B8%9A%E0%B8%B8%E0%B8%8D%E0%B8%A1%E0%B8%B5%E0%B8%A3%E0%B8%B0%E0%B8%A5%E0%B8%B6%E0%B8%81%E0%B8%8A%E0%B8%B2%E0%B8%95%E0%B8%B4.jpg" alt="" loading="lazy">
+<div class="poster-label"><strong>Uncle Boonmee</strong>Apichatpong W., 2010</div>
+        </div>
+        <div class="card-meta">
+          <div>
+            <div class="card-title">Uncle Boonmee</div>
+            <div class="card-thai">ลุงบุญมีระลึกชาติ</div>
+          </div>
+          <div class="card-rating">★ 7.6</div>
+        </div>
+        <div class="card-info"><span>2010</span><span>Arthouse</span><span>114 min</span></div>
+      </a>
+
+      <a class="card" href="films.html">
+        <div class="poster tint-rose">
+          <span class="badge">Box-Office #1</span>
+          <img src="images/%E0%B8%9E%E0%B8%B5%E0%B9%88%E0%B8%A1%E0%B8%B2%E0%B8%81%E0%B8%9E%E0%B8%A3%E0%B8%B0%E0%B9%82%E0%B8%82%E0%B8%99%E0%B8%87.jpg" alt="" loading="lazy">
+<div class="poster-label"><strong>Pee Mak</strong>Banjong P., 2013</div>
+        </div>
+        <div class="card-meta">
+          <div>
+            <div class="card-title">Pee Mak</div>
+            <div class="card-thai">พี่มาก..พระโขนง</div>
+          </div>
+          <div class="card-rating">★ 7.9</div>
+        </div>
+        <div class="card-info"><span>2013</span><span>Romance · Horror</span><span>129 min</span></div>
+      </a>
+
+      <a class="card" href="films.html">
+        <div class="poster tint-jade">
+          <span class="badge">Cult Classic</span>
+          <img src="images/bad%20genius.jpg" alt="" loading="lazy">
+<div class="poster-label"><strong>Bad Genius</strong>Nattawut P., 2017</div>
+        </div>
+        <div class="card-meta">
+          <div>
+            <div class="card-title">Bad Genius</div>
+            <div class="card-thai">ฉลาดเกมส์โกง</div>
+          </div>
+          <div class="card-rating">★ 7.6</div>
+        </div>
+        <div class="card-info"><span>2017</span><span>Heist</span><span>130 min</span></div>
+      </a>
+
+      <a class="card" href="films.html">
+        <div class="poster tint-rust">
+          <span class="badge">Highest-Grossing</span>
+          <img src="images/how%20to%20make%20millions%20before%20grandma%20dies.jpg" alt="" loading="lazy">
+<div class="poster-label"><strong>How to Make Millions Before Grandma Dies</strong>Pat B., 2024</div>
+        </div>
+        <div class="card-meta">
+          <div>
+            <div class="card-title">How to Make Millions…</div>
+            <div class="card-thai">หลานม่า</div>
+          </div>
+          <div class="card-rating">★ 8.0</div>
+        </div>
+        <div class="card-info"><span>2024</span><span>Drama</span><span>125 min</span></div>
+      </a>
+
+      <a class="card" href="films.html">
+        <div class="poster tint-night">
+          <span class="badge">Shudder</span>
+          <img src="images/the%20medium.jpg" alt="" loading="lazy">
+<div class="poster-label"><strong>The Medium</strong>Banjong P., 2021</div>
+        </div>
+        <div class="card-meta">
+          <div>
+            <div class="card-title">The Medium</div>
+            <div class="card-thai">ร่างทรง</div>
+          </div>
+          <div class="card-rating">★ 6.9</div>
+        </div>
+        <div class="card-info"><span>2021</span><span>Horror</span><span>131 min</span></div>
+      </a>
+
+      <a class="card" href="films.html">
+        <div class="poster tint-violet">
+          <span class="badge">Cannes ·  Un Certain Regard</span>
+          <img src="images/memoria.jpg" alt="" loading="lazy">
+<div class="poster-label"><strong>Memoria</strong>Apichatpong W., 2021</div>
+        </div>
+        <div class="card-meta">
+          <div>
+            <div class="card-title">Memoria</div>
+            <div class="card-thai">เมโมเรีย</div>
+          </div>
+          <div class="card-rating">★ 7.0</div>
+        </div>
+        <div class="card-info"><span>2021</span><span>Arthouse</span><span>136 min</span></div>
+      </a>
+
+      <a class="card" href="films.html">
+        <div class="poster tint-blue">
+          <span class="badge">Venice · Orizzonti</span>
+          <img src="images/manta%20ray.jpg" alt="" loading="lazy">
+<div class="poster-label"><strong>Manta Ray</strong>Phuttiphong A., 2018</div>
+        </div>
+        <div class="card-meta">
+          <div>
+            <div class="card-title">Manta Ray</div>
+            <div class="card-thai">กระเบนราหู</div>
+          </div>
+          <div class="card-rating">★ 6.8</div>
+        </div>
+        <div class="card-info"><span>2018</span><span>Drama</span><span>105 min</span></div>
+      </a>
+
+      <a class="card" href="films.html">
+        <div class="poster tint-mist">
+          <span class="badge">Netflix Original</span>
+          <img src="images/one%20for%20the%20road.jpg" alt="" loading="lazy">
+<div class="poster-label"><strong>One for the Road</strong>Baz Poonpiriya, 2021</div>
+        </div>
+        <div class="card-meta">
+          <div>
+            <div class="card-title">One for the Road</div>
+            <div class="card-thai">วันสุดท้าย..ก่อนบายเธอ</div>
+          </div>
+          <div class="card-rating">★ 7.0</div>
+        </div>
+        <div class="card-info"><span>2021</span><span>Drama</span><span>136 min</span></div>
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- ============== SERIES ============== -->
+<section class="series-editorial" data-screen-label="04 Series">
+  <div class="wrap">
+    <div class="series-grid">
+      <div class="series-headline">
+        <div class="eyebrow">Chapter II · The Series</div>
+        <h2 style="margin-top:20px;">Eleven series<br/>that <em>break</em><br/>algorithms.</h2>
+        <p class="lead">Thai series have become the unexpected gravity well of global streaming — pulling 60 million viewers a month into Bangkok love triangles, high-school crimes, and intricate Y-universes.</p>
+        <a href="series.html" class="btn">All series <span class="arr">→</span></a>
+      </div>
+
+      <div class="series-list">
+        <a class="series-row" href="series.html">
+          <div class="num">N°01</div>
+          <div>
+            <div class="title"><em>Girl from Nowhere</em></div>
+            <small>เด็กใหม่ · Netflix · 2 seasons</small>
+          </div>
+          <div class="info"><span class="yr">2018—21</span><span>School · Thriller</span></div>
+        </a>
+        <a class="series-row" href="series.html">
+          <div class="num">N°02</div>
+          <div>
+            <div class="title"><em>Hormones</em></div>
+            <small>วัยว้าวุ่น · GDH · 3 seasons</small>
+          </div>
+          <div class="info"><span class="yr">2013—15</span><span>Coming-of-Age</span></div>
+        </a>
+        <a class="series-row" href="series.html">
+          <div class="num">N°03</div>
+          <div>
+            <div class="title"><em>Bad Genius: The Series</em></div>
+            <small>ฉลาดเกมส์โกง · One31 · Limited</small>
+          </div>
+          <div class="info"><span class="yr">2020</span><span>Heist</span></div>
+        </a>
+        <a class="series-row" href="series.html">
+          <div class="num">N°04</div>
+          <div>
+            <div class="title"><em>Hunger</em></div>
+            <small>คนหิว เกมกระหาย · Netflix · Film</small>
+          </div>
+          <div class="info"><span class="yr">2023</span><span>Drama · Food</span></div>
+        </a>
+        <a class="series-row" href="series.html">
+          <div class="num">N°05</div>
+          <div>
+            <div class="title"><em>Doctor Climax</em></div>
+            <small>หมอความรัก · Netflix · S1</small>
+          </div>
+          <div class="info"><span class="yr">2024</span><span>Period · Comedy</span></div>
+        </a>
+        <a class="series-row" href="series.html">
+          <div class="num">N°06</div>
+          <div>
+            <div class="title"><em>Master of the House</em></div>
+            <small>ลูกผู้ชาย · Netflix · S1</small>
+          </div>
+          <div class="info"><span class="yr">2024</span><span>Drama · Thriller</span></div>
+        </a>
+        <a class="series-row" href="series.html">
+          <div class="num">N°07</div>
+          <div>
+            <div class="title"><em>Delete</em></div>
+            <small>เดลีท · Netflix · Limited</small>
+          </div>
+          <div class="info"><span class="yr">2023</span><span>Sci-Fi · Romance</span></div>
+        </a>
+        <a class="series-row" href="series.html">
+          <div class="num">N°08</div>
+          <div>
+            <div class="title"><em>The Stranded</em></div>
+            <small>เคว้ง · Netflix · S1</small>
+          </div>
+          <div class="info"><span class="yr">2019</span><span>Mystery</span></div>
+        </a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============== SPOTLIGHT ============== -->
+<section class="spotlight" id="spotlight" data-screen-label="05 Spotlight">
+  <div class="wrap">
+    <div class="spotlight-grid">
+      <div>
+        <div class="poster tint-rose">
+          <img src="images/how%20to%20make%20millions%20before%20grandma%20dies.jpg" alt="" loading="lazy">
+<div class="poster-label"><strong>หลานม่า · How to Make Millions Before Grandma Dies</strong>still — kitchen scene</div>
+        </div>
+      </div>
+      <div>
+        <div class="eyebrow">Spotlight · This Edition</div>
+        <h2 style="margin: 20px 0;">A grandson, a grandmother, and an <em>inheritance</em> the world cried over.</h2>
+        <p class="lead">Released April 2024, <em style="color:var(--gold)">หลานม่า</em> became the highest-grossing Thai film of all time across Indonesia, Vietnam, and the Philippines — and in doing so, quietly redefined what a Thai family drama could be exported as.</p>
+
+        <div class="meta-grid">
+          <div class="meta-cell">
+            <div class="lbl">Director</div>
+            <div class="val">Pat Boonnitipat</div>
+          </div>
+          <div class="meta-cell">
+            <div class="lbl">Box Office</div>
+            <div class="val">$87M+</div>
+          </div>
+          <div class="meta-cell">
+            <div class="lbl">Territories</div>
+            <div class="val">23</div>
+          </div>
+        </div>
+
+        <a class="btn btn--primary" href="films.html">Read the full essay <span class="arr">→</span></a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============== IMPACT ============== -->
+<section class="impact" data-screen-label="06 Impact">
+  <div class="wrap">
+    <div class="section-head" style="margin-bottom: 0;">
+      <div>
+        <div class="eyebrow">By the Numbers</div>
+        <h2 style="margin-top:20px;">The economics<br/>of <em style="color:var(--gold);font-style:italic;font-weight:400;">storytelling.</em></h2>
+      </div>
+      <div class="right">
+        <p>Thailand's content industry has crossed from cultural export into top-line GDP contributor. Below — the receipts.</p>
+      </div>
+    </div>
+
+    <div class="impact-grid">
+      <div class="impact-cell">
+        <div class="big">2.7<span class="unit">B$</span></div>
+        <div class="cap">Annual Export Value · 2025</div>
+        <div class="desc">Film, series, music, format licensing combined.</div>
+      </div>
+      <div class="impact-cell">
+        <div class="big">+34<span class="unit">%</span></div>
+        <div class="cap">YoY Streaming Growth</div>
+        <div class="desc">Thai-language content on Netflix, WeTV, iQIYI.</div>
+      </div>
+      <div class="impact-cell">
+        <div class="big">62<span class="unit">M</span></div>
+        <div class="cap">Monthly Global Viewers</div>
+        <div class="desc">Across the top 12 Thai series titles.</div>
+      </div>
+      <div class="impact-cell">
+        <div class="big">19</div>
+        <div class="cap">Festival Selections · 2025</div>
+        <div class="desc">Cannes, Venice, Berlin, Toronto, Busan.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============== QUOTE ============== -->
+<section data-screen-label="07 Quote">
+  <div class="wrap">
+    <div class="quote">
+      <div class="quote-mark">"</div>
+      <q>Thailand doesn't <em style="color:var(--gold);font-style:italic">advertise</em> itself anymore. It just lets you fall in love with a grandmother in a kitchen, and the rest takes care of itself.</q>
+      <div class="quote-attr">— <span>Variety Asia</span> · October 2025</div>
+    </div>
+  </div>
+</section>
+
+<!-- ============== CTA ============== -->
+<section id="cta" class="cta" data-screen-label="08 CTA">
+  <div class="wrap">
+    <div class="eyebrow" style="justify-content:center; display:inline-flex;">Begin Your Watchlist</div>
+    <h2 style="margin: 24px auto 0; max-width: 14ch;">Press <em>play</em> on a country.</h2>
+    <p class="lead">Five sections, sixty hours of viewing, one cohesive sense of where modern Thailand wants the world to look. Start anywhere — every door leads somewhere good.</p>
+    <div class="cta-buttons">
+      <a href="films.html" class="btn btn--primary">Films catalogue <span class="arr">→</span></a>
+      <a href="series.html" class="btn">Series catalogue <span class="arr">→</span></a>
+    </div>
+  </div>
+</section>
+
+<!-- ============== FOOTER ============== -->
+<footer class="footer">
+  <div class="footer-grid">
+    <div>
+      <a href="index.html" class="brand">
+        <div class="mark"></div>
+        <div>SOFTPOWER<small>Thai Cinema Authority</small></div>
+      </a>
+      <p style="color: var(--ink-2); font-size: 14px; max-width: 380px; margin-top: 20px;">An editorial field guide to the films and series shaping Thailand's place in the global imagination. Independent · non-commercial · updated quarterly.</p>
+    </div>
+    <div>
+      <h4>Sections</h4>
+      <ul>
+        <li><a href="index.html">Home</a></li>
+        <li><a href="films.html">Films</a></li>
+        <li><a href="series.html">Series</a></li>
+        <li><a href="festivals.html">Festivals</a></li>
+        <li><a href="contact.html">Contact</a></li>
+      </ul>
+    </div>
+    <div>
+      <h4>This Page</h4>
+      <ul>
+        <li><a href="#story">Premise</a></li>
+        <li><a href="#spotlight">Spotlight</a></li>
+        <li><a href="#cta">Watchlist</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <div>© 2026 Softpower Editorial · Bangkok</div>
+  </div>
+</footer>
+
+<script src="assets/anim.js"></script>
+</body>
+</html>

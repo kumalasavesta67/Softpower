@@ -1,0 +1,388 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Contact — SOFTPOWER</title>
+<link rel="stylesheet" href="assets/styles.css" />
+<link rel="stylesheet" href="assets/anim.css" />
+<style>
+  /* ============================================================
+     CONTACT · MASTHEAD / COLOPHON
+     ============================================================ */
+
+  .masthead-hero {
+    max-width: var(--maxw);
+    margin: 0 auto;
+    padding: 160px var(--pad) 80px;
+    position: relative;
+  }
+  .colophon-eyebrow {
+    display: inline-flex;
+    align-items: center;
+    gap: 14px;
+    font-family: var(--mono);
+    font-size: 11px;
+    letter-spacing: 0.24em;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 40px;
+  }
+  .colophon-eyebrow::before { content: ''; width: 32px; height: 1px; background: var(--gold); }
+
+  .masthead-title {
+    font-family: var(--serif);
+    font-size: clamp(56px, 9vw, 138px);
+    line-height: 0.95;
+    font-weight: 400;
+    letter-spacing: -0.015em;
+    max-width: 14ch;
+  }
+  .masthead-title em { color: var(--gold); font-style: italic; font-weight: 400; }
+  .masthead-title .row { display: block; }
+
+  .masthead-lead {
+    max-width: 540px;
+    margin-top: 52px;
+    font-size: 17px;
+    line-height: 1.7;
+    color: var(--ink-2);
+  }
+  .masthead-lead em { color: var(--gold); font-style: italic; }
+
+  .masthead-coord {
+    position: absolute;
+    top: 160px; right: var(--pad);
+    font-family: var(--mono);
+    font-size: 10px;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: var(--ink-3);
+    text-align: right;
+    line-height: 1.9;
+  }
+  .masthead-coord .gold { color: var(--gold); }
+  .masthead-coord .rule { width: 32px; height: 1px; background: var(--ink-3); margin: 12px 0 12px auto; }
+  @media (max-width: 720px) {
+    .masthead-coord { position: static; text-align: left; margin-top: 40px; }
+    .masthead-coord .rule { margin-left: 0; }
+  }
+
+  .credits-rule { max-width: var(--maxw); margin: 0 auto; padding: 0 var(--pad); }
+  .credits-rule-inner {
+    border-top: 1px solid var(--line);
+    padding-top: 60px;
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    font-family: var(--mono);
+    font-size: 10px;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: var(--ink-3);
+  }
+  .credits-rule-inner .gold { color: var(--gold); }
+
+  .credits {
+    max-width: var(--maxw);
+    margin: 0 auto;
+    padding: 40px var(--pad) 120px;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 56px;
+  }
+  @media (max-width: 980px) { .credits { grid-template-columns: 1fr 1fr; gap: 48px; } }
+  @media (max-width: 680px) { .credits { grid-template-columns: 1fr; gap: 64px; } }
+
+  .credit { position: relative; display: flex; flex-direction: column; }
+  @media (min-width: 980px) { .credit:nth-child(2) { margin-top: 96px; } }
+
+  .credit-frame {
+    font-family: var(--mono);
+    font-size: 10px;
+    letter-spacing: 0.24em;
+    text-transform: uppercase;
+    color: var(--ink-3);
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    margin-bottom: 20px;
+  }
+  .credit-frame::before {
+    content: '';
+    width: 22px; height: 1px;
+    background: var(--ink-3);
+    transition: width 0.4s ease, background-color 0.4s ease;
+  }
+  .credit:hover .credit-frame::before { width: 44px; background: var(--gold); }
+
+  .credit-portrait {
+    position: relative;
+    aspect-ratio: 4/5;
+    border: 1px solid var(--line);
+    overflow: hidden;
+    margin-bottom: 32px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: border-color 0.5s ease, transform 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+  .credit:hover .credit-portrait { border-color: var(--gold); transform: translateY(-6px); }
+  .credit:nth-child(1) .credit-portrait { background: linear-gradient(155deg, #2a1418 0%, #3d1d22 50%, #1a0d10 100%); }
+  .credit:nth-child(2) .credit-portrait { background: linear-gradient(155deg, #0f1f1a 0%, #1a3329 50%, #0a1612 100%); }
+  .credit:nth-child(3) .credit-portrait { background: linear-gradient(155deg, #2a1f0a 0%, #3d2e10 50%, #1a1408 100%); }
+
+  .credit-portrait::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background-image: repeating-linear-gradient(
+      135deg,
+      transparent 0,
+      transparent 28px,
+      rgba(214, 164, 70, 0.05) 28px,
+      rgba(214, 164, 70, 0.05) 29px
+    );
+    pointer-events: none;
+  }
+  .credit-portrait::after {
+    content: '';
+    position: absolute;
+    inset: 14px;
+    border: 1px solid rgba(244, 235, 221, 0.07);
+    pointer-events: none;
+    transition: border-color 0.5s ease;
+  }
+  .credit:hover .credit-portrait::after { border-color: rgba(214, 164, 70, 0.22); }
+
+  .credit-initials {
+    font-family: var(--serif);
+    font-style: italic;
+    font-weight: 400;
+    font-size: clamp(96px, 14vw, 180px);
+    line-height: 1;
+    color: var(--gold);
+    opacity: 0.55;
+    letter-spacing: -0.04em;
+    position: relative;
+    z-index: 1;
+    transition: opacity 0.5s ease, transform 0.7s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+  .credit:hover .credit-initials { opacity: 0.95; transform: scale(1.04); }
+
+  .credit-shotmark {
+    position: absolute;
+    bottom: 18px; left: 20px;
+    font-family: var(--mono);
+    font-size: 9px;
+    letter-spacing: 0.2em;
+    color: rgba(244, 235, 221, 0.4);
+    z-index: 2;
+  }
+  .credit-shotmark .dot {
+    display: inline-block;
+    width: 5px; height: 5px;
+    background: #d24a4a;
+    border-radius: 50%;
+    margin-right: 8px;
+    vertical-align: middle;
+    animation: blink 2.4s ease-in-out infinite;
+  }
+  @keyframes blink { 0%, 100% { opacity: 0.4; } 50% { opacity: 1; } }
+
+  .credit-role {
+    font-family: var(--mono);
+    font-size: 11px;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 16px;
+  }
+  .credit-name {
+    font-family: var(--serif);
+    font-size: clamp(30px, 3.2vw, 42px);
+    line-height: 1.05;
+    font-weight: 400;
+    color: var(--ink);
+    margin-bottom: 6px;
+    letter-spacing: -0.01em;
+  }
+  .credit-name em { font-style: italic; color: var(--gold); font-weight: 400; }
+  .credit-thai {
+    font-family: var(--thai);
+    font-size: 14px;
+    color: var(--ink-3);
+    line-height: 1.5;
+    margin-bottom: 32px;
+  }
+
+  .credit-ig {
+    display: inline-flex;
+    align-items: center;
+    gap: 12px;
+    font-family: var(--mono);
+    font-size: 13px;
+    color: var(--ink-2);
+    text-decoration: none;
+    letter-spacing: 0.06em;
+    padding: 16px 0 4px;
+    border-top: 1px solid var(--line);
+    margin-top: auto;
+    transition: color 0.35s ease, border-color 0.35s ease, padding-left 0.35s ease;
+    position: relative;
+  }
+  .credit-ig::before {
+    content: '@';
+    font-family: var(--serif);
+    font-style: italic;
+    font-size: 22px;
+    line-height: 0.8;
+    color: var(--gold);
+    transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+  .credit-ig::after {
+    content: '↗';
+    margin-left: auto;
+    font-size: 14px;
+    opacity: 0;
+    transform: translate(-8px, 4px);
+    transition: opacity 0.35s ease, transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+  .credit-ig:hover { color: var(--gold); border-top-color: var(--gold); padding-left: 6px; }
+  .credit-ig:hover::before { transform: rotate(-12deg) scale(1.08); }
+  .credit-ig:hover::after { opacity: 1; transform: translate(0, 0); }
+
+
+  @keyframes contactFadeUp { from { opacity: 0; transform: translateY(32px); } to { opacity: 1; transform: translateY(0); } }
+  .colophon-eyebrow { animation: contactFadeUp 0.7s ease both 0.05s; }
+  .masthead-title .row:nth-child(1) { animation: contactFadeUp 0.9s ease both 0.18s; display: block; }
+  .masthead-title .row:nth-child(2) { animation: contactFadeUp 0.9s ease both 0.32s; display: block; }
+  .masthead-lead { animation: contactFadeUp 0.8s ease both 0.5s; }
+  .masthead-coord { animation: contactFadeUp 0.7s ease both 0.6s; }
+  .credits-rule-inner { animation: contactFadeUp 0.7s ease both 0.7s; }
+  .credit { opacity: 0; animation: contactFadeUp 0.9s ease forwards; }
+  .credit:nth-child(1) { animation-delay: 0.78s; }
+  .credit:nth-child(2) { animation-delay: 0.94s; }
+  .credit:nth-child(3) { animation-delay: 1.10s; }
+</style>
+</head>
+<body>
+<div class="grain"></div>
+
+<nav class="nav">
+  <a href="index.html" class="brand">
+    <div class="mark"></div>
+    <div>SOFTPOWER<small>Thai Cinema Authority</small></div>
+  </a>
+  <ul class="nav-links">
+    <li><a href="index.html">Home</a></li>
+    <li><a href="films.html">Films</a></li>
+    <li><a href="series.html">Series</a></li>
+    <li><a href="festivals.html">Festivals</a></li>
+    <li><a href="contact.html" class="active">Contact</a></li>
+  </ul>
+</nav>
+
+<header class="masthead-hero" data-screen-label="01 Masthead">
+  <div class="colophon-eyebrow">Colophon · Masthead · 03 Credits</div>
+  <h1 class="masthead-title">
+    <span class="row">The names</span>
+    <span class="row">behind <em>the lens.</em></span>
+  </h1>
+  <p class="masthead-lead">
+    A small editorial desk in Bangkok writing about Thai film and series for a global audience. Three people, three Instagram inboxes — <em>no forms, no auto-replies.</em> The site is small, so the inbox is short.
+  </p>
+  <div class="masthead-coord">
+    <div><span class="gold">13.7563° N</span> · 100.5018° E</div>
+    <div class="rule"></div>
+    <div>Bangkok · Krung Thep</div>
+    <div>Edition 12.05.2026</div>
+  </div>
+</header>
+
+<div class="credits-rule">
+  <div class="credits-rule-inner">
+    <div>The Masthead</div>
+    <div><span class="gold">03</span> Contributors · One Inbox Each</div>
+  </div>
+</div>
+
+<section class="credits-section" data-screen-label="02 Credits">
+  <div class="credits">
+
+    <article class="credit">
+      <div class="credit-frame">Credit 01 of 03</div>
+      <div class="credit-portrait">
+        <img src="images/Nutt.png" style="position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; z-index: 0; filter: grayscale(20%) contrast(1.1);" alt="Nutt J.Jithcharoenchai">
+        <div class="credit-shotmark"><span class="dot"></span>Roll 01 · Take A</div>
+      </div>
+      <div class="credit-role">Founder · ผู้ก่อตั้ง</div>
+      <h2 class="credit-name">Nutt <em>J.Jithcharoenchai</em></h2>
+      <div class="credit-thai">วิสัยทัศน์ ทิศทางบรรณาธิการ และเรื่องเล่าที่ยังไม่ได้ถูกเขียน</div>
+      <a href="https://instagram.com/notsojuicynano" target="_blank" rel="noopener" class="credit-ig">notsojuicynano</a>
+    </article>
+
+    <article class="credit">
+      <div class="credit-frame">Credit 02 of 03</div>
+      <div class="credit-portrait">
+        <img src="images/Phawatkun.jpg" style="position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; z-index: 0; filter: grayscale(20%) contrast(1.1);" alt="Phwchkun Chokanannithi">
+        <div class="credit-shotmark"><span class="dot"></span>Roll 02 · Take B</div>
+      </div>
+      <div class="credit-role">Water Boy · ฝ่ายสนับสนุน</div>
+      <h2 class="credit-name">Phwchkun <em>Chokanannithi</em></h2>
+      <div class="credit-thai">ดูแลทุกอย่างที่เหลือ — น้ำ กาแฟ กำลังใจ และข้อเท็จจริง</div>
+      <a href="https://instagram.com/phwchkun" target="_blank" rel="noopener" class="credit-ig">phwchkun</a>
+    </article>
+
+    <article class="credit">
+      <div class="credit-frame">Credit 03 of 03</div>
+      <div class="credit-portrait">
+        <img src="images/puriphat.jpg" style="position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; z-index: 0; filter: grayscale(20%) contrast(1.1);" alt="Puriphat Sirinu">
+        <div class="credit-shotmark"><span class="dot"></span>Roll 03 · Take C</div>
+      </div>
+      <div class="credit-role">Editor · บรรณาธิการ</div>
+      <h2 class="credit-name">Puriphat <em>Sirinu</em></h2>
+      <div class="credit-thai">ตัดต่อ ขัดเกลา และคืนรูปทรงให้ทุกประโยคที่คุณอ่าน</div>
+      <a href="https://instagram.com/phaxt_x" target="_blank" rel="noopener" class="credit-ig">phaxt_x</a>
+    </article>
+
+  </div>
+</section>
+
+
+<footer class="footer">
+  <div class="footer-grid">
+    <div>
+      <a href="index.html" class="brand">
+        <div class="mark"></div>
+        <div>SOFTPOWER<small>Thai Cinema Authority</small></div>
+      </a>
+      <p style="color: var(--ink-2); font-size: 14px; max-width: 380px; margin-top: 20px;">An editorial field guide to the films and series shaping Thailand's place in the global imagination.</p>
+    </div>
+    <div>
+      <h4>Sections</h4>
+      <ul>
+        <li><a href="index.html">Home</a></li>
+        <li><a href="films.html">Films</a></li>
+        <li><a href="series.html">Series</a></li>
+        <li><a href="festivals.html">Festivals</a></li>
+        <li><a href="contact.html">Contact</a></li>
+      </ul>
+    </div>
+    <div>
+      <h4>This Page</h4>
+      <ul>
+        <li><a href="#">Masthead</a></li>
+        <li><a href="#">Inquiries</a></li>
+        <li><a href="#">Studio</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <div>© 2026 Softpower Editorial · Bangkok</div>
+  </div>
+</footer>
+
+<script src="assets/anim.js"></script>
+</body>
+</html>

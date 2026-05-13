@@ -1,0 +1,570 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Series — SOFTPOWER</title>
+<link rel="stylesheet" href="assets/styles.css" />
+<link rel="stylesheet" href="assets/anim.css" />
+<style>
+  /* ---- Series page ---- */
+  .hero-series {
+    position: relative;
+    padding: 180px var(--pad) 80px;
+    overflow: hidden;
+    background:
+      radial-gradient(ellipse at 80% 50%, rgba(120,180,140,0.10), transparent 55%),
+      radial-gradient(ellipse at 10% 90%, rgba(214,164,70,0.08), transparent 55%),
+      var(--bg);
+    border-bottom: 1px solid var(--line);
+  }
+  .hero-series h1 em { color: var(--jade); font-style: italic; font-weight: 400; }
+
+  /* Tabs */
+  .tabs {
+    background: var(--bg-2);
+    border-bottom: 1px solid var(--line);
+    position: sticky;
+    top: 90px;
+    z-index: 40;
+  }
+  .tabs-inner {
+    max-width: var(--maxw);
+    margin: 0 auto;
+    padding: 0 var(--pad);
+    display: flex;
+    gap: 0;
+    overflow-x: auto;
+  }
+  .tab {
+    font-family: var(--mono);
+    font-size: 11px;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    padding: 22px 28px;
+    background: transparent;
+    color: var(--ink-3);
+    border: none;
+    border-bottom: 1px solid transparent;
+    cursor: pointer;
+    white-space: nowrap;
+    transition: all 0.2s;
+  }
+  .tab:hover { color: var(--ink); }
+  .tab.active { color: var(--gold); border-bottom-color: var(--gold); }
+  .tab .count { color: var(--ink-3); margin-left: 8px; font-size: 9px; }
+  .tab.active .count { color: var(--gold); }
+
+  /* Featured series — billboard */
+  .billboard {
+    background: var(--bg-2);
+    border-bottom: 1px solid var(--line);
+  }
+  .billboard-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0;
+    border: 1px solid var(--line);
+  }
+  @media (max-width: 880px) { .billboard-grid { grid-template-columns: 1fr; } }
+  .bb-poster { aspect-ratio: 2/3; }
+  .bb-content {
+    padding: 50px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+  }
+  .bb-content h2 { font-size: clamp(40px, 4.5vw, 64px); margin: 20px 0; }
+  .bb-content h2 em { color: var(--gold); font-style: italic; font-weight: 400; }
+  .bb-meta {
+    display: flex;
+    gap: 30px;
+    margin: 24px 0;
+    padding: 16px 0;
+    border-top: 1px solid var(--line);
+    border-bottom: 1px solid var(--line);
+    flex-wrap: wrap;
+  }
+  .bb-meta div {
+    font-family: var(--mono);
+    font-size: 10px;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--ink-3);
+  }
+  .bb-meta strong { display: block; font-family: var(--serif); font-style: italic; font-size: 18px; color: var(--gold); font-weight: 400; margin-top: 4px; text-transform: none; letter-spacing: 0; }
+
+  /* Series grid (cards) */
+  .series-card-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 28px;
+  }
+  @media (max-width: 880px) { .series-card-grid { grid-template-columns: repeat(2, 1fr); } }
+  @media (max-width: 540px) { .series-card-grid { grid-template-columns: 1fr; } }
+
+  .scard {
+    display: flex;
+    flex-direction: column;
+    cursor: pointer;
+    transition: transform 0.3s;
+  }
+  .scard:hover { transform: translateY(-4px); }
+  .scard:hover .poster { border-color: var(--gold); }
+  .scard .poster { aspect-ratio: 2/3; }
+  .scard h3 {
+    font-family: var(--serif);
+    font-size: 26px;
+    line-height: 1.15;
+    margin-top: 18px;
+  }
+  .scard .th {
+    font-family: var(--thai);
+    font-size: 13px;
+    color: var(--ink-3);
+    margin-top: 4px;
+  }
+  .scard .desc {
+    font-size: 14px;
+    color: var(--ink-2);
+    margin-top: 12px;
+    line-height: 1.6;
+  }
+  .scard .footer { display: none; }
+  .scard .platform { color: var(--gold); }
+
+  .panel.hidden { display: none; }
+
+  /* Y-Series feature */
+  .y-feature {
+    background:
+      radial-gradient(ellipse at 30% 50%, rgba(214,164,70,0.08), transparent 60%),
+      var(--bg-2);
+    border-top: 1px solid var(--line);
+    border-bottom: 1px solid var(--line);
+  }
+  .y-grid {
+    display: grid;
+    grid-template-columns: 1fr 2fr;
+    gap: 60px;
+    align-items: center;
+  }
+  @media (max-width: 880px) { .y-grid { grid-template-columns: 1fr; } }
+
+  .y-stats {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 0;
+    margin-top: 50px;
+    border-top: 1px solid var(--line);
+  }
+  @media (max-width: 880px) { .y-stats { grid-template-columns: 1fr 1fr; } }
+  .y-stat { padding: 24px 24px 24px 0; border-right: 1px solid var(--line); border-bottom: 1px solid var(--line); }
+  .y-stat:last-child { border-right: none; }
+  .y-stat:nth-child(n+2) { padding-left: 24px; }
+  .y-stat .big {
+    font-family: var(--serif);
+    font-style: italic;
+    font-size: clamp(40px, 5vw, 64px);
+    color: var(--gold);
+    line-height: 1;
+  }
+  .y-stat .lbl {
+    font-family: var(--mono);
+    font-size: 10px;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--ink-3);
+    margin-top: 12px;
+  }
+
+  /* Platform breakdown */
+  .platforms-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 24px;
+    margin-top: 60px;
+  }
+  @media (max-width: 880px) { .platforms-grid { grid-template-columns: 1fr 1fr; } }
+  .pf {
+    border: 1px solid var(--line);
+    padding: 28px;
+    background: var(--bg-2);
+    transition: all 0.2s;
+  }
+  .pf:hover { border-color: var(--gold); background: var(--bg-3); }
+  .pf .lbl {
+    font-family: var(--mono);
+    font-size: 10px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--gold);
+  }
+  .pf .name { font-family: var(--serif); font-size: 32px; margin: 8px 0 16px; }
+  .pf .count { font-family: var(--serif); font-style: italic; font-size: 56px; color: var(--gold); line-height: 1; }
+  .pf .count-lbl { font-family: var(--mono); font-size: 10px; letter-spacing: 0.18em; text-transform: uppercase; color: var(--ink-3); margin-top: 8px; }
+  .pf .titles { margin-top: 24px; padding-top: 18px; border-top: 1px solid var(--line); font-size: 13px; color: var(--ink-2); line-height: 1.7; }
+  .pf .titles em { color: var(--ink); font-style: italic; }
+</style>
+<script src="https://mcp.figma.com/mcp/html-to-design/capture.js"></script>
+</head>
+<body>
+<div class="grain"></div>
+
+<nav class="nav">
+  <a href="index.html" class="brand">
+    <div class="mark"></div>
+    <div>SOFTPOWER<small>Thai Cinema Authority</small></div>
+  </a>
+  <ul class="nav-links">
+    <li><a href="index.html">Home</a></li>
+    <li><a href="films.html">Films</a></li>
+    <li><a href="series.html" class="active">Series</a></li>
+    <li><a href="festivals.html">Festivals</a></li>
+    <li><a href="contact.html">Contact</a></li>
+  </ul>
+</nav>
+
+<!-- ============== HERO ============== -->
+<header class="hero-series" data-screen-label="01 Series Hero">
+  <div class="wrap">
+    <div class="pageHead" style="padding:0;border:none;">
+      <div>
+        <div class="eyebrow">Chapter II · The Stream</div>
+        <h1 style="margin-top:20px;">The <em>Series.</em></h1>
+      </div>
+      <div>
+        <p class="lead">Thai series — once a domestic-only affair of soap operas and teen romances — are now the second-most-watched non-English category on global streaming. Below: the genres, the platforms, and the eleven shows that did it.</p>
+      </div>
+    </div>
+  </div>
+</header>
+
+<!-- ============== TABS ============== -->
+<div class="tabs">
+  <div class="tabs-inner">
+    <button class="tab active" data-tab="all">All Series <span class="count">11</span></button>
+    <button class="tab" data-tab="netflix">Netflix <span class="count">06</span></button>
+    <button class="tab" data-tab="local">Local Network <span class="count">03</span></button>
+    <button class="tab" data-tab="bl">Y · BL <span class="count">02</span></button>
+  </div>
+</div>
+
+<!-- ============== BILLBOARD ============== -->
+<section class="billboard" data-screen-label="02 Billboard">
+  <div class="wrap">
+    <div class="eyebrow" style="margin-bottom: 24px;">Pick of the Quarter</div>
+    <div class="billboard-grid">
+      <div class="poster bb-poster tint-night">
+        <span class="badge">Netflix · Limited</span>
+        <img src="images/girl%20from%20nowhere.jpg" alt="" loading="lazy">
+<div class="poster-label"><strong>Girl from Nowhere</strong>เด็กใหม่ · S1—S2</div>
+      </div>
+      <div class="bb-content">
+        <div class="eyebrow">The Phenomenon</div>
+        <h2><em>Nanno</em> walked into school,<br/>and the algorithm <em>never</em><br/>recovered.</h2>
+        <p class="lead">Episodes-as-fables, casual cruelty, an unsettling lead. <em style="color:var(--gold)">Girl from Nowhere</em> hit Netflix's global Top 10 in 35 territories — and quietly proved Thai series could travel without softening their edges.</p>
+        <div class="bb-meta">
+          <div>Platform <strong>Netflix</strong></div>
+          <div>Seasons <strong>2 (26 ep)</strong></div>
+          <div>Premiered <strong>2018</strong></div>
+          <div>IMDb <strong>★ 7.5</strong></div>
+        </div>
+        <div style="display:flex; gap:12px; flex-wrap:wrap;">
+          <a class="btn btn--primary" href="#all-series">All series catalogue <span class="arr">→</span></a>
+          <a class="btn" href="#platforms">By platform <span class="arr">→</span></a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============== ALL SERIES ============== -->
+<section id="all-series" data-screen-label="03 Series Cards">
+  <div class="wrap">
+    <div class="section-head">
+      <div>
+        <div class="eyebrow">Catalogue</div>
+        <h2 style="margin-top:20px;">Eleven series<br/>worth a <em>weekend.</em></h2>
+      </div>
+      <div class="right">
+        <p>Each entry includes platform, season count, and what makes it specifically — irreducibly — Thai.</p>
+      </div>
+    </div>
+
+    <!-- ALL -->
+    <div class="panel" data-panel="all">
+      <div class="series-card-grid">
+        <a class="scard" data-cat="netflix">
+          <div class="poster tint-night">
+            <span class="badge">Netflix</span>
+            <img src="images/girl%20from%20nowhere.jpg" alt="" loading="lazy">
+<div class="poster-label"><strong>Girl from Nowhere</strong>เด็กใหม่</div>
+          </div>
+          <h3>Girl from Nowhere</h3>
+          <div class="th">เด็กใหม่</div>
+          <div class="desc">An omniscient transfer student exposes the rotten core of every Thai high school she walks into. Anthology, brutal, addictive.</div>
+          <div class="footer"><span class="platform">Netflix · 2 seasons</span><span>2018—2021</span></div>
+        </a>
+
+        <a class="scard" data-cat="local">
+          <div class="poster tint-rose">
+            <span class="badge">GDH</span>
+            <img src="images/hormones.jpg" alt="" loading="lazy">
+<div class="poster-label"><strong>Hormones</strong>วัยว้าวุ่น</div>
+          </div>
+          <h3>Hormones</h3>
+          <div class="th">วัยว้าวุ่น</div>
+          <div class="desc">The series that broke the mould of Thai teen drama — frank, queer, plotted like an indie film. Three seasons, an ensemble that defined a generation.</div>
+          <div class="footer"><span class="platform">GMM 25 · 3 seasons</span><span>2013—2015</span></div>
+        </a>
+
+        <a class="scard" data-cat="netflix">
+          <div class="poster tint-jade">
+            <span class="badge">Netflix · S1</span>
+            <img src="images/master%20of%20the%20house.webp" alt="" loading="lazy">
+<div class="poster-label"><strong>Master of the House</strong>ลูกผู้ชาย</div>
+          </div>
+          <h3>Master of the House</h3>
+          <div class="th">ลูกผู้ชาย</div>
+          <div class="desc">A jewelry tycoon dies and his maid inherits everything. A bitter, gilded family-warfare drama that landed Top 10 globally.</div>
+          <div class="footer"><span class="platform">Netflix · 1 season</span><span>2024</span></div>
+        </a>
+
+        <a class="scard" data-cat="netflix">
+          <div class="poster tint-rust">
+            <span class="badge">Netflix · S1</span>
+            <img src="images/doctor%20climax.jpg" alt="" loading="lazy">
+<div class="poster-label"><strong>Doctor Climax</strong>หมอความรัก</div>
+          </div>
+          <h3>Doctor Climax</h3>
+          <div class="th">หมอความรัก</div>
+          <div class="desc">1970s Bangkok. A bored doctor starts a sex-advice column and finds himself at the heart of a national taboo. Period costume, soft satire, sharp truths.</div>
+          <div class="footer"><span class="platform">Netflix · 1 season</span><span>2024</span></div>
+        </a>
+
+        <a class="scard" data-cat="netflix">
+          <div class="poster tint-blue">
+            <span class="badge">Netflix · Limited</span>
+            <img src="images/delete.jpg" alt="" loading="lazy">
+<div class="poster-label"><strong>Delete</strong>เดลีท</div>
+          </div>
+          <h3>Delete</h3>
+          <div class="th">เดลีท</div>
+          <div class="desc">A camera that erases people from the world. Sci-fi noir disguised as a love quadrangle. A favorite of mood-piece bingers.</div>
+          <div class="footer"><span class="platform">Netflix · Limited</span><span>2023</span></div>
+        </a>
+
+        <a class="scard" data-cat="netflix">
+          <div class="poster tint-gold">
+            <span class="badge">Netflix</span>
+            <img src="images/bad%20genius%20the%20series.jpg" alt="" loading="lazy">
+<div class="poster-label"><strong>Bad Genius: The Series</strong>ฉลาดเกมส์โกง</div>
+          </div>
+          <h3>Bad Genius: The Series</h3>
+          <div class="th">ฉลาดเกมส์โกง</div>
+          <div class="desc">The 2017 film expanded and re-cast for streaming. More time to breathe, more characters to root for, the same exam-room tension.</div>
+          <div class="footer"><span class="platform">One31 / Netflix</span><span>2020</span></div>
+        </a>
+
+        <a class="scard" data-cat="local">
+          <div class="poster tint-violet">
+            <span class="badge">GMM 25</span>
+            <img src="images/the%20gifted.jpg" alt="" loading="lazy">
+<div class="poster-label"><strong>The Gifted</strong>นักเรียนพลังกิฟต์</div>
+          </div>
+          <h3>The Gifted</h3>
+          <div class="th">นักเรียนพลังกิฟต์</div>
+          <div class="desc">An academically segregated high school discovers its top students have supernatural abilities. Sci-fi, class commentary, and slow-burning conspiracy.</div>
+          <div class="footer"><span class="platform">GMM 25 · 2 seasons</span><span>2018—2020</span></div>
+        </a>
+
+        <a class="scard" data-cat="netflix">
+          <div class="poster tint-mist">
+            <span class="badge">Netflix · S1</span>
+            <img src="images/the%20stranded.jpg" alt="" loading="lazy">
+<div class="poster-label"><strong>The Stranded</strong>เคว้ง</div>
+          </div>
+          <h3>The Stranded</h3>
+          <div class="th">เคว้ง</div>
+          <div class="desc">Netflix's first Thai original. Students stranded on a remote island after a tsunami. Lost, but distinctly Andaman.</div>
+          <div class="footer"><span class="platform">Netflix · 1 season</span><span>2019</span></div>
+        </a>
+        <a class="scard" data-cat="bl">
+          <div class="poster tint-rose">
+            <span class="badge">Y · BL</span>
+            <img src="images/i%20told%20sunset%20about%20you.webp" alt="" loading="lazy">
+<div class="poster-label"><strong>I Told Sunset About You</strong>แปลรักฉันด้วยใจเธอ</div>
+          </div>
+          <h3>I Told Sunset About You</h3>
+          <div class="th">แปลรักฉันด้วยใจเธอ</div>
+          <div class="desc">A Phuket-set coming-of-age between two boys studying for university entrance. Critically considered the genre's high-water mark.</div>
+          <div class="footer"><span class="platform">LINE TV · 2 seasons</span><span>2020—2021</span></div>
+        </a>
+
+        <a class="scard" data-cat="bl">
+          <div class="poster tint-gold">
+            <span class="badge">Y · BL</span>
+            <img src="images/bad%20buddy.jpeg" alt="" loading="lazy">
+<div class="poster-label"><strong>Bad Buddy</strong>เพื่อนเล่น..ไม่เล่นเพื่อน</div>
+          </div>
+          <h3>Bad Buddy</h3>
+          <div class="th">เพื่อนเล่น..ไม่เล่นเพื่อน</div>
+          <div class="desc">Two engineering students from feuding families. The genre's romantic-comedy archetype, deftly self-aware. Global cult.</div>
+          <div class="footer"><span class="platform">GMMTV · 1 season</span><span>2021</span></div>
+        </a>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- ============== Y-FEATURE ============== -->
+<section class="y-feature" id="y" data-screen-label="04 Y-Series Feature">
+  <div class="wrap">
+    <div class="y-grid">
+      <div>
+        <div class="poster tint-rose square">
+          <span class="badge">Genre · Y / BL</span>
+          <img src="images/series%20y%20universe.jpg" alt="" loading="lazy">
+<div class="poster-label"><strong>Y-Universe</strong>ซีรีส์วาย</div>
+        </div>
+      </div>
+      <div>
+        <div class="eyebrow">A Genre Unto Itself</div>
+        <h2 style="margin: 20px 0;">The <em style="color:var(--gold)">Y-Series</em>:<br/>Thailand's most <em style="color:var(--gold)">improbable</em> export.</h2>
+        <p class="lead">A genre Thai studios invented for a domestic teenage audience and which the rest of the world adopted with no warning. Today, "Y" (from Japanese <em>yaoi</em>) is a $400M ecosystem of romantic dramas between male leads — broadcast across 50+ countries, with fandoms larger than the country that made them.</p>
+
+        <div class="y-stats">
+          <div class="y-stat">
+            <div class="big">+187</div>
+            <div class="lbl">Y-series produced</div>
+          </div>
+          <div class="y-stat">
+            <div class="big">$400M</div>
+            <div class="lbl">Annual genre revenue</div>
+          </div>
+          <div class="y-stat">
+            <div class="big">52</div>
+            <div class="lbl">Export territories</div>
+          </div>
+          <div class="y-stat">
+            <div class="big">9M</div>
+            <div class="lbl">Avg fan-engagement / pair</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============== PLATFORMS ============== -->
+<section id="platforms" data-screen-label="05 Platforms">
+  <div class="wrap">
+    <div class="section-head">
+      <div>
+        <div class="eyebrow">Where to Watch</div>
+        <h2 style="margin-top:20px;">By <em>platform.</em></h2>
+      </div>
+      <div class="right">
+        <p>Four windows onto Thai series production — each with a different commissioning logic, audience, and aesthetic.</p>
+      </div>
+    </div>
+
+    <div class="platforms-grid">
+      <div class="pf">
+        <div class="lbl">Global Streamer</div>
+        <div class="name">Netflix</div>
+        <div class="count">31</div>
+        <div class="count-lbl">Original Thai series</div>
+        <div class="titles">Flagship investments since 2019. <em>Hunger</em>, <em>The Stranded</em>, <em>Doctor Climax</em>, <em>Master of the House</em>.</div>
+      </div>
+      <div class="pf">
+        <div class="lbl">Free-to-air</div>
+        <div class="name">GMM 25</div>
+        <div class="count">94</div>
+        <div class="count-lbl">Annual original hours</div>
+        <div class="titles">The domestic powerhouse. <em>Hormones</em>, <em>The Gifted</em>. Pipeline for international remakes.</div>
+      </div>
+      <div class="pf">
+        <div class="lbl">Asian Streamer</div>
+        <div class="name">WeTV / iQIYI</div>
+        <div class="count">22</div>
+        <div class="count-lbl">Co-productions / yr</div>
+        <div class="titles">Chinese-market gateway. Heavy on Y-series and romance. Specialist in cross-border pairings.</div>
+      </div>
+      <div class="pf">
+        <div class="lbl">Premium Cable</div>
+        <div class="name">Disney+ Hotstar</div>
+        <div class="count">12</div>
+        <div class="count-lbl">Thai originals (2026)</div>
+        <div class="titles">Newest entrant. Genre-leaning. <em>Mae Nak</em> reboot anticipated 2026.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============== QUOTE ============== -->
+<section data-screen-label="06 Quote">
+  <div class="wrap">
+    <div class="quote">
+      <div class="quote-mark">"</div>
+      <q>Thai series are the only place on streaming where you'll find a high-school <em style="color:var(--gold); font-style:italic">ghost</em>, a corporate <em style="color:var(--gold); font-style:italic">heist</em>, and a tender BL romance — and trust that the production house can do all three.</q>
+      <div class="quote-attr">— <span>The Hollywood Reporter Asia</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- ============== FOOTER ============== -->
+<footer class="footer">
+  <div class="footer-grid">
+    <div>
+      <a href="index.html" class="brand">
+        <div class="mark"></div>
+        <div>SOFTPOWER<small>Thai Cinema Authority</small></div>
+      </a>
+      <p style="color: var(--ink-2); font-size: 14px; max-width: 380px; margin-top: 20px;">An editorial field guide to the films and series shaping Thailand's place in the global imagination.</p>
+    </div>
+    <div>
+      <h4>Sections</h4>
+      <ul>
+        <li><a href="index.html">Home</a></li>
+        <li><a href="films.html">Films</a></li>
+        <li><a href="series.html">Series</a></li>
+        <li><a href="festivals.html">Festivals</a></li>
+        <li><a href="contact.html">Contact</a></li>
+      </ul>
+    </div>
+    <div>
+      <h4>This Page</h4>
+      <ul>
+        <li><a href="#all-series">All Series</a></li>
+        <li><a href="#y">Y-Series</a></li>
+        <li><a href="#platforms">Platforms</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <div>© 2026 Softpower Editorial · Bangkok</div>
+  </div>
+</footer>
+
+<script>
+  const tabs = document.querySelectorAll('.tab');
+  const cards = document.querySelectorAll('.scard');
+  tabs.forEach(tab => {
+    tab.addEventListener('click', () => {
+      tabs.forEach(t => t.classList.remove('active'));
+      tab.classList.add('active');
+      const f = tab.dataset.tab;
+      cards.forEach(c => {
+        const match = f === 'all' || c.dataset.cat === f;
+        c.style.display = match ? '' : 'none';
+      });
+    });
+  });
+</script>
+
+<script src="assets/anim.js"></script>
+</body>
+</html>
